@@ -14,8 +14,8 @@ GLfloat sy = 1;
 void Desenha_braco()
 {
 
-	/* Define a cor do quadrado para verde */
-	glColor3f(1.0f, 0.0f, 0.0f);
+	// definindo a cor do braço como cinza
+	glColor3f(0.45f, 0.45f, 0.45f);
 	glBegin(GL_QUADS);
 		glVertex2i(200, 300);
 		glVertex2i(225, 300);
@@ -23,7 +23,7 @@ void Desenha_braco()
 		glVertex2i(200, 180);
 	glEnd();
 
-	/* Define um ponto na cor preta */
+	/* Define um ponto pivot do braçõ */
 	glColor3f(0.0, 0.0, 0.0);
 	/* Define o tamanho do ponto para 4x4 pixels */
 	glPointSize(4);
@@ -34,8 +34,7 @@ void Desenha_braco()
 
 void Desenha_antebraco()
 {
-	/* Define a cor do quadrado para verde */
-	//glColor3f(0.0f, 1.0f, 0.0f);
+	//definindo a cor do antebraço como preta
 	glBegin(GL_QUADS);
 		glVertex2i(200, 180);
 		glVertex2i(225, 180);
@@ -43,7 +42,7 @@ void Desenha_antebraco()
 		glVertex2i(200, 100);
 	glEnd();
 
-	/* Define um ponto na cor preta */
+	/* Define um ponto pivot do antebraço */
 	glColor3f(0.0, 0.0, 0.0);
 	/* Define o tamanho do ponto para 4x4 pixels */
 	glPointSize(4);
@@ -52,10 +51,10 @@ void Desenha_antebraco()
 	glEnd();
 }
 
-void Desenha_cabeca_verde()
+void Desenha_cabeca()
 {
-	/* Define a cor do quadrado para verde */
-	glColor3f(1.0f, 0.0f, 0.0f);
+	/* Define a cor da cabeça como cinza*/
+	glColor3f(0.45f, 0.45f, 0.45f);
 	glBegin(GL_QUADS);
 		glVertex2i(75, 310);
 		glVertex2i(175, 310);
@@ -63,32 +62,17 @@ void Desenha_cabeca_verde()
 		glVertex2i(75, 410);
 	glEnd();
 
-	/* Define um ponto na cor preta */
-	glColor3f(0.0, 0.0, 0.0);
-	/* Define o tamanho do ponto para 4x4 pixels */
-	glPointSize(4);
-	glBegin(GL_POINTS);
-		glVertex2i(250, 250);
-	glEnd();
 }
 
-void Desenha_quadrado_cor_azul()
+void Desenha_corpo()
 {
-	/* Define a cor do quadrado para azul */
-	glColor3f(0.0f, 0.0f, 1.0f);
+	/* Define a cor do corpo como cinza */
+	glColor3f(0.45f, 0.45f, 0.45f);
 	glBegin(GL_QUADS);
 		glVertex2i(50, 50);
 		glVertex2i(200, 50);
 		glVertex2i(200, 300);
 		glVertex2i(50, 300);
-	glEnd();
-
-	/* Define um ponto na cor preta */
-	glColor3f(0.0, 0.0, 0.0);
-	/* Define o tamanho do ponto para 4x4 pixels */
-	glPointSize(4);
-	glBegin(GL_POINTS);
-		glVertex2i(250, 100);
 	glEnd();
 }
 
@@ -101,54 +85,32 @@ void Desenha(void)
 	/* Limpa a janela de visualização com a cor de fundo especificada */
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	/* P_vermelhor = (250, 400) */
-	/* P_verde = (250, 250) */
-	/* P_azul = (250, 100) */
-
-	/*glTranslatef(250.0, 400.0, 0.0);
-	glScalef(0.5, 0.5, 1.0);
-	glTranslatef(-250.0, -400.0, 0.0);
-	Desenha_quadrado_cor_vermelho();
-
-	glPushMatrix();
-	glLoadIdentity();
-
-	glTranslatef(250.0, 250.0, 0.0);
-	glRotatef(30.0, 0.0, 0.0, 1.0);
-	glTranslatef(-250.0, -250.0, 0.0);
-	Desenha_quadrado_cor_verde();
-
-	glPopMatrix();
-
-	glLoadIdentity();*/
-	//
-	//ROTACIONANDO O BRAÇO
+	
 	glPushMatrix();
 	//glLoadIdentity();
 
+	//realizando a translação que engloba toda figura
 	glTranslatef(tx, ty , 0.0);
+
+	//realizando a escala que aumenta/diminui toda figura
 	glScalef(sx,sy,1.0f);
-	Desenha_quadrado_cor_azul();
-	Desenha_cabeca_verde();
+
+	Desenha_corpo();
+	Desenha_cabeca();
+
+	//realizando a rotação que engloba braço/antebraço
 	glTranslatef(212.5, 300.0, 0.0);
 	glRotatef(angulo, 0.0, 0.0, 1.0);
 	glTranslatef(-212.5, -300.0, 0.0);
-
 	Desenha_braco();
 
+	//realizando a rotação somente do antebraço
 	glTranslatef(212.5, 180.0, 0.0);
 	glRotatef(anguloAnte, 0.0, 0.0, 1.0);
 	glTranslatef(-212.5, -180.0, 0.0);
-
 	Desenha_antebraco();
-	glPopMatrix();
 
-	//ROTACIONANDO O ANTEBRAÇO
-	
-	//glRotatef(angulo,0.0,0.0,1.0);
-	
-	//Desenha_braco();
-	//Desenha_antebraco();
+	glPopMatrix();
 
 	/* Executa os comandos OpenGL */
 	glFlush();
@@ -159,28 +121,29 @@ void GerenciaTeclado(unsigned char key, int x, int y)
     switch (key)
      {
 
-		case 'r':/* muda a cor corrente para vermelho */
+		case 'r': //rotaciona o braço no sentido anti-horário
 		{	
 			angulo++;
 		}
 
 		break;
 
-		case 'e':/* muda a cor corrente para vermelho */
+		case 'e': // rotaciona o antebraço no sentido anti-horario
 		{	
 			anguloAnte++;
 		}
 
 		break;
 
-		case 's':
+
+		case 's': //realiza a escala. as proporçoes aumentam em 0.1 a cada vez que a tecla 's' é digitada
 		{
 			sx = sx+0.1;
 			sy = sy+0.1;
 		}
 			break;
 
-		case 'S':
+		case 'S': // acontece o oposto da tecla minúscula correspondente
 		{
 			sx = sx-0.1;
 			sy = sy-0.1;
@@ -188,7 +151,8 @@ void GerenciaTeclado(unsigned char key, int x, int y)
 		}
 
 
-		case 'q':
+
+		case 'q': //termina o programa
 			exit(1);
 			break;
     }
@@ -200,7 +164,8 @@ void GerenciaTeclado(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-void GerenciaTeclasDirecionais (int key, int x, int y)
+/* foi necessário criar outra função, pois teclas direcionais só são reconhecidas na função specialFunc*/
+void GerenciaTeclasDirecionais (int key, int x, int y) 
 {
 
 		switch(key)
@@ -238,6 +203,7 @@ void GerenciaTeclasDirecionais (int key, int x, int y)
 
 		glutPostRedisplay();
 }
+
 
 /* Inicializa parâmetros de rendering */
 void Inicializa (void)
