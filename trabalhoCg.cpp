@@ -15,7 +15,7 @@ void Desenha_braco()
 {
 
 	/* Define a cor do quadrado para verde */
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.45f, 0.45f, 0.45f);
 	glBegin(GL_QUADS);
 		glVertex2i(200, 300);
 		glVertex2i(225, 300);
@@ -52,10 +52,10 @@ void Desenha_antebraco()
 	glEnd();
 }
 
-void Desenha_cabeca_verde()
+void Desenha_cabeca()
 {
 	/* Define a cor do quadrado para verde */
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.45f, 0.45f, 0.45f);
 	glBegin(GL_QUADS);
 		glVertex2i(75, 310);
 		glVertex2i(175, 310);
@@ -72,10 +72,10 @@ void Desenha_cabeca_verde()
 	glEnd();
 }
 
-void Desenha_quadrado_cor_azul()
+void Desenha_corpo()
 {
 	/* Define a cor do quadrado para azul */
-	glColor3f(0.0f, 0.0f, 1.0f);
+	glColor3f(0.45f, 0.45f, 0.45f);
 	glBegin(GL_QUADS);
 		glVertex2i(50, 50);
 		glVertex2i(200, 50);
@@ -128,8 +128,8 @@ void Desenha(void)
 
 	glTranslatef(tx, ty , 0.0);
 	glScalef(sx,sy,1.0f);
-	Desenha_quadrado_cor_azul();
-	Desenha_cabeca_verde();
+	Desenha_corpo();
+	Desenha_cabeca();
 	glTranslatef(212.5, 300.0, 0.0);
 	glRotatef(angulo, 0.0, 0.0, 1.0);
 	glTranslatef(-212.5, -300.0, 0.0);
